@@ -79,7 +79,6 @@ function setup(){
     background_object_arrays.reverse();
 }
 
-
 function draw(){
     if(frameCount == 2){
         santa.setSantaY();
@@ -90,12 +89,10 @@ function draw(){
             background_object_arrays[i][j].run();
         }
     }
-    
+
     santa.run(frameCount);
-    
-    fill(0, 0, 0);
-    ellipse(100, 100, 40, 40);
 }
+
 
 
 function determineBackgroundCount(cw, bw){
