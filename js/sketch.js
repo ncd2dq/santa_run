@@ -81,7 +81,6 @@ function setup(){
 
 
 function draw(){
-    console.log(frameRate());
     if(frameCount == 2){
         santa.setSantaY();
     }
