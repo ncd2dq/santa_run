@@ -81,9 +81,6 @@ function setup(){
 
 
 function draw(){
-    fill(0, 0, 0);
-    ellipse(100, 100, 40, 40);
-    
     if(frameCount == 2){
         santa.setSantaY();
     }
@@ -95,6 +92,9 @@ function draw(){
     }
     
     santa.run(frameCount);
+    
+    fill(0, 0, 0);
+    ellipse(100, 100, 40, 40);
 }
 
 
