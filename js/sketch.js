@@ -14,7 +14,7 @@ let santa;
 let background_music, snow_steps_music;
 let first_time_music = false;
 
-/*function preload(){
+function preload(){
     // Load Background Images
     b_layers.push(loadImage('./assets/backgrounds/l7-ground.png'));
     b_layers.push(loadImage('./assets/backgrounds/l6-mountains02.png'));
@@ -29,31 +29,10 @@ let first_time_music = false;
     
     // Load Santa Images master_speed, speed_discount, scaling
     santa = new Santa(MASTER_SPEED, 1, (MASTER_SCALING * 0.4));
-}*/
+}
 
 
 function setup(){
-    //test peload
-    
-    // Load Background Images
-    b_layers.push(loadImage('./assets/backgrounds/l7-ground.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l6-mountains02.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l5-clouds02.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l4-fog.png')); // For some reason this doesn't line up with the others
-    b_layers.push(loadImage('./assets/backgrounds/l3-mountains01.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l2-clouds01.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l1-backgrounds.png'));
-    
-    background_music = loadSound('./assets/chuck_berry_run.mp3');
-    snow_steps_music = loadSound('./assets/snow_running.mp3');
-    
-    // Load Santa Images master_speed, speed_discount, scaling
-    santa = new Santa(MASTER_SPEED, 1, (MASTER_SCALING * 0.4));
-    
-    
-    
-    
-    
     // Initialize screen
     let canv = createCanvas(WIDTH, HEIGHT);
     canv.parent('the_canvas');
