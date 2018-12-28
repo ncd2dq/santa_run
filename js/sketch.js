@@ -8,21 +8,30 @@ let b_layers = [];
 // Array of arrays containing all repeats of a given layer
 // List[List[all_layer1], List[all_layer2], List[all_layer3], ...]
 let background_object_arrays = [];
+let b1, b2, b3, b4, b5, b6, b7
 
 let santa;
 
 let background_music, snow_steps_music;
 let first_time_music = false;
 
+function background_loading(img){
+    
+}
+
 function preload(){
+    // The issue is having all images in preload on mobile. They load asynchornously
+    
+    
+    
     // Load Background Images
-    b_layers.push(loadImage('./assets/backgrounds/l7-ground.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l6-mountains02.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l5-clouds02.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l4-fog.png')); // For some reason this doesn't line up with the others
-    b_layers.push(loadImage('./assets/backgrounds/l3-mountains01.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l2-clouds01.png'));
-    b_layers.push(loadImage('./assets/backgrounds/l1-backgrounds.png'));
+    b7 = loadImage('./assets/backgrounds/l7-ground.png');
+    b6 = loadImage('./assets/backgrounds/l6-mountains02.png');
+    b5 = loadImage('./assets/backgrounds/l5-clouds02.png');
+    b4 = loadImage('./assets/backgrounds/l4-fog.png'); // For some reason this doesn't line up with the others
+    b3 = loadImage('./assets/backgrounds/l3-mountains01.png');
+    b2 = loadImage('./assets/backgrounds/l2-clouds01.png');
+    b1 = loadImage('./assets/backgrounds/l1-backgrounds.png');
     
     background_music = loadSound('./assets/chuck_berry_run.mp3');
     snow_steps_music = loadSound('./assets/snow_running.mp3');
@@ -33,6 +42,17 @@ function preload(){
 
 
 function setup(){
+    // Load images in order
+    b_layers.push(b7);
+    b_layers.push(b6);
+    b_layers.push(b5);
+    b_layers.push(b4);
+    b_layers.push(b3);
+    b_layers.push(b2);
+    b_layers.push(b1);
+    
+    // Maybe also do this for santa?
+    
     // Initialize screen
     let canv = createCanvas(WIDTH, HEIGHT);
     canv.parent('the_canvas');
