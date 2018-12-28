@@ -37,7 +37,8 @@ function preload(){
     snow_steps_music = loadSound('./assets/snow_running.mp3');
     
     // Load Santa Images master_speed, speed_discount, scaling
-    //santa = new Santa(MASTER_SPEED, 1, (MASTER_SCALING * 0.4));
+    // Mobile problem is here
+    santa = new Santa(MASTER_SPEED, 1, (MASTER_SCALING * 0.4));
 }
 
 
