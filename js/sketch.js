@@ -33,8 +33,8 @@ function preload(){
     b2 = loadImage('./assets/backgrounds/l2-clouds01.png');
     b1 = loadImage('./assets/backgrounds/l1-backgrounds.png');
     
-    //background_music = loadSound('./assets/chuck_berry_run.mp3');
-    //snow_steps_music = loadSound('./assets/snow_running.mp3');
+    background_music = loadSound('./assets/chuck_berry_run.mp3');
+    snow_steps_music = loadSound('./assets/snow_running.mp3');
     
     // Load Santa Images master_speed, speed_discount, scaling
     //santa = new Santa(MASTER_SPEED, 1, (MASTER_SCALING * 0.4));
