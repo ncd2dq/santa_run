@@ -1,6 +1,6 @@
 class BackGround{
     // Any scrolling background image
-    constructor(ground_img, master_speed, speed_discount, scaling, x_offset=false, is_ground=false, is_base=false){
+    constructor(ground_img, master_speed, speed_discount, scaling, x_offset=false, is_ground=false, is_base=false, is_block=false){
         /*
         @param ground_img: p5.js loadImage() object on which sprite will run
         @param master_speed: integer speed of sprite / ground floor
@@ -29,8 +29,15 @@ class BackGround{
             // Hardcoded 70% from experimentation
             this.y_ceiling_offset = this.height * 0.7;
         }
+        if(is_block){
+            this.y_ceiling_offset = this.height * 0.52;
+            this.x_real_offset = this.width * 0.625;
+            this.x_real_offset_2 = this.width * 0.77;
+        }
         // If the flat color background, do not move
         this.is_base = is_base;
+        
+        this.santa_above = false;
     }
     
     screenLoop(){
@@ -45,16 +52,59 @@ class BackGround{
         this.x -= this.speed;
     }
     
+    stopScroll(){
+        this.speed = 0;
+    }
+    
+    santaAbove(santa){
+        //Top left x/y, bottom right x/y
+        this.hitbox = {'Run': [0.24, 0.05, 0.58, 0.91], 'Slide': [0.057, 0.178, 0.58, 0.91]}
+        
+        if(santa.state == 'Slide'){
+            let hitbox = santa.hitbox['Slide']; 
+            
+            
+        } else {
+            let hitbox = santa.hitbox['Run'];
+            let x1 = hitbox[0] * santa.width + santa.x;
+            let x2 = hitbox[2] * santa.width + santa.x;
+            let y1 = hitbox[3] * santa.height + santa.y;
+            
+            this.y_ceiling_offset = this.height * 0.52;
+            this.x_real_offset = this.width * 0.625;
+            this.x_real_offset_2 = this.width * 0.77;
+            
+            //debug santa
+            //line(x1, y1, x2, y1);
+
+            if((x1 > this.x_real_offset + this.x && x1 < this.x_real_offset_2 + this.x) || (x2 > this.x_real_offset + this.x && x2 < this.x_real_offset_2 + this.x)){
+                if(y1 <= this.y_ceiling_offset){
+                    this.santa_above = true;
+                    background(100, 100, 100, 100);
+                    return true;
+                }
+            }
+            this.santa_above = false;
+        }
+    }
+    
+    debugBlock(){
+        rect(this.x + this.x_real_offset, this.y_ceiling_offset, 150, 40);
+    }
+    
     display(){
         // Blit image to canvas
         image(this.im, this.x, this.y, this.width, this.height);
     }
     
-    run(){
+    run(santa){
         // Don't scroll or loop if static background
         if(!this.is_base){
             this.scroll();
             this.screenLoop();
+        }
+        if(this.x_real_offset){
+            this.santaAbove(santa);
         }
         this.display();
     }

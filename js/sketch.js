@@ -8,22 +8,19 @@ let b_layers = [];
 // Array of arrays containing all repeats of a given layer
 // List[List[all_layer1], List[all_layer2], List[all_layer3], ...]
 let background_object_arrays = [];
-let b1, b2, b3, b4, b5, b6, b7
+let b1, b2, b3, b4, b5, b6, b7;
+let block_img;
+let block_list = [];
 
 let santa;
 
 let background_music, snow_steps_music;
 let first_time_music = false;
 
-function background_loading(img){
-    
-}
+let game_over = false;
 
 function preload(){
     // The issue is having all images in preload on mobile. They load asynchornously
-    
-    
-    
     // Load Background Images
     b7 = loadImage('./assets/backgrounds/l7-ground.png');
     b6 = loadImage('./assets/backgrounds/l6-mountains02.png');
@@ -32,6 +29,8 @@ function preload(){
     b3 = loadImage('./assets/backgrounds/l3-mountains01.png');
     b2 = loadImage('./assets/backgrounds/l2-clouds01.png');
     b1 = loadImage('./assets/backgrounds/l1-backgrounds.png');
+    
+    block_img = loadImage('./assets/backgrounds/l8-block.png');
     
     background_music = loadSound('./assets/chuck_berry_run.mp3');
     snow_steps_music = loadSound('./assets/snow_running.mp3');
@@ -98,7 +97,15 @@ function setup(){
         background_object_arrays.push(single_layer_array);
     }
     background_object_arrays.reverse();
+    
+    block_list.push(new BackGround(
+                                    block_img, MASTER_SPEED, 
+                                    1, MASTER_SCALING, 
+                                    0, false, false, true
+                                    )
+                   )
 }
+
 
 function draw(){
     // Draw all paralax background layers
@@ -107,13 +114,40 @@ function draw(){
             background_object_arrays[i][j].run();
         }
     }
+    for(let i = 0; i < block_list.length; i ++){
+        block_list[i].run(santa);
+        //block_list[i].debugBlock();
+    }
     
     if(frameCount == 2){
-        santa.setSantaY();
+        santa.setSantaYGround();
     }
-    santa.run(frameCount);
+    santa.run(frameCount, block_list);
+    
+    if(game_over){
+        gameOver();
+    }
 }
 
+
+function gameOver(){
+    /*
+    Stop background movement, set santa to Dead animation, Darken background
+    */
+    for(let i = 0; i < background_object_arrays.length; i++){
+        for(let j = 0; j <background_object_arrays[i].length; j++){
+            background_object_arrays[i][j].stopScroll();
+        }
+    }
+    santa.changeState('Dead');
+    if(santa.animation_index == santa.state_counts['Dead'] - 1){
+        santa.alive = false;
+        background(15, 15, 15, 15);
+        text('Christmas', 100, 100);
+        text('Is', 100, 125);
+        text('Kill', 100, 150);
+    }
+}
 
 
 function determineBackgroundCount(cw, bw){
@@ -136,6 +170,7 @@ function determineBackgroundCount(cw, bw){
     
 }
 
+
 function mousePressed(){
     if(!first_time_music || !background_music.isPlaying()){
         background_music.play();
@@ -151,5 +186,14 @@ function keyPressed(){
         first_time_music = true;
     } else if (santa.onGround && !snow_steps_music.isPlaying()){
         snow_steps_music.play();
+    }
+    console.log(keyCode);
+    
+    if(keyCode == 32){ //Space
+        santa.jump();
+    } else if(keyCode == 40){ //Down
+        santa.slide();
+    } else if(keyCode == 38 || keyCode == 39 || keyCode == 37){
+        santa.changeState('Run')
     }
 }
